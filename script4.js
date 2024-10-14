@@ -106,3 +106,24 @@ function proceedToPayment(cart) {
     resolve("Payment Successful");
   });
 }
+createOrder(cart)
+  .then(function (orderId) {
+    // ✅ success aka resolved promise handling
+    // 💡 we have return data or promise so that we can keep chaining the promises, here we are returning data
+    console.log(orderId);
+    return orderId;
+  })
+    .catch(function (err) {
+    // ⚠️ Whatever fails below it, catch wont care
+    // this block is responsible for code block above it.
+    console.log(err);
+  });
+  .then(function (orderId) {
+    // Promise chaining
+    // 💡 we will make sure that `proceedToPayment` returns a promise too
+    return proceedToPayment(orderId);
+  })
+  .then(function (paymentInfo) {
+    // from above, `proceedToPayment` is returning a promise so we can consume using `.then`
+    console.log(paymentInfo);
+  })
